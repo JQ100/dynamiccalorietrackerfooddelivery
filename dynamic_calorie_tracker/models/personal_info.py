@@ -8,4 +8,4 @@ class PersonalInfo(db.Model):
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
-        return '<personal_info %r>' % self.id
+        return '<PersonalInfo %r>' % self.id

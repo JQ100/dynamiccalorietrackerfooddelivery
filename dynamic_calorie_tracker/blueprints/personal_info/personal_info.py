@@ -22,5 +22,3 @@ def personal_info():
         # todo: use render_template
         # return render_template('index.html', tasks=tasks)
         return "This is the Personal Information page"
-
-
