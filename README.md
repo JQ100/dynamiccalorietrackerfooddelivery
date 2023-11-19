@@ -5,6 +5,39 @@ This is the repo for Dynamic Calorie Tracker project.
 - The directory dynamic_calorie_tracker is the main module for the project. We implement code inside this module.
 - The file requirements.txt defines the packages for running the service of the project.
 
+# How To Run
+1. Install `virtualenv` if it is not installed:
+```
+$ pip install virtualenv
+```
+
+2. Open a terminal in the project root directory and run:
+```
+$ virtualenv env
+```
+
+3. Then run the command:
+```
+$ source ./env/bin/activate
+```
+
+4. Then install the dependencies:
+```
+$ (env) pip install -r requirements.txt
+```
+
+5. Create the database in "Create DB" section
+
+6. Set the environment variable FLASK_APP. The following command is for the project dynamic_calorie_tracker.
+```
+$ (env) export FLASK_APP=dynamic_calorie_tracker
+```
+
+7. Finally start the web server:
+```
+$ (env) flask run
+```
+
 # DB
 
 ## Create DB
@@ -39,37 +72,6 @@ sqlite> .schema
 sqlite> select * from personal_info;
 ```
 
-# How To Run
-1. Install `virtualenv` if it is not installed:
-```
-$ pip install virtualenv
-```
-
-2. Open a terminal in the project root directory and run:
-```
-$ virtualenv env
-```
-
-3. Then run the command:
-```
-$ source ./env/bin/activate
-```
-
-4. Then install the dependencies:
-```
-$ (env) pip install -r requirements.txt
-```
-
-5. Set the environment variable FLASK_APP. The following command is for the project dynamic_calorie_tracker.
-```
-$ (env) export FLASK_APP=dynamic_calorie_tracker
-```
-
-6. Finally start the web server:
-```
-$ (env) flask run
-```
-
 # Todo
 - Hold knowledge sharing sessions. Record zoom videos.
     - How to start the server
@@ -77,7 +79,7 @@ $ (env) flask run
     - DB development
     - REST API
     - etc
-- use camel format for file and variable names
+- use snake format for file and variable names
 - use db migrate to create and populate the db. Use "flask db init" to create db.
 - May rename the repo
 
