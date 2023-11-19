@@ -1,6 +1,9 @@
 # Introduction
 
-This is the repo for Dynamic Calorie Tracker project
+This is the repo for Dynamic Calorie Tracker project.
+
+- The directory dynamic_calorie_tracker is the main module for the project. We implement code inside this module.
+- The file requirements.txt defines the packages for running the service of the project.
 
 # DB
 
@@ -67,18 +70,18 @@ $ (env) export FLASK_APP=dynamic_calorie_tracker
 $ (env) flask run
 ```
 
-This server will start on port 5000 by default. You can change this in `app.py` by changing the following line to this:
-
-```python
-if __name__ == "__main__":
-    app.run(debug=True, port=<desired port>)
-```
-
 # Todo
-* Hold knowledge sharing sessions. Record zoom videos.
-* May rename the repo dynamic_calorie_tracker
-* use camel format for file and variable names
-* use db migrate to create and populate the db. Use "flask db init" to create db.
+- Hold knowledge sharing sessions. Record zoom videos.
+    - How to start the server
+    - How to create your own branch and merge it to main
+    - DB development
+    - REST API
+    - etc
+- use camel format for file and variable names
+- use db migrate to create and populate the db. Use "flask db init" to create db.
+- May rename the repo
 
-# Tutorials
-* [Markdown Cheat Sheet](https://www.markdownguide.org/cheat-sheet/) for writing README.md.
+# Tutorials and Knowledge Sharing
+- [Markdown Cheat Sheet](https://www.markdownguide.org/cheat-sheet/) for writing README.md.
+- [How to Use Flask-SQLAlchemy With Flask Blueprints](https://www.youtube.com/watch?v=WhwU1-DLeVw). A video about Flask code structure and database models.
+- [Learn Flask for Python - Full Tutorial](https://www.youtube.com/watch?v=Z1RJmh_OqeA). A video about database models and REST API
