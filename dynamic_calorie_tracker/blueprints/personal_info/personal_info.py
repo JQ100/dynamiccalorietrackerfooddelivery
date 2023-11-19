@@ -2,10 +2,10 @@ from flask import Blueprint, render_template, request, redirect
 from ...models.personal_info import PersonalInfo
 from ...extensions import db
 
-personalinfo_bp = Blueprint("personalinfo", __name__, template_folder="templates")
+personal_info_bp = Blueprint("personal_info", __name__, template_folder="templates")
 
-@personalinfo_bp.route("/personalinfo", methods=['POST', 'GET'])
-def personalinfo():
+@personal_info_bp.route("/personal_info", methods=['POST', 'GET'])
+def personal_info():
     if request.method == 'POST':
         name = request.form['name']
         new_personal_info = PersonalInfo(name=name)
@@ -13,7 +13,7 @@ def personalinfo():
         try:
             db.session.add(new_personal_info)
             db.session.commit()
-            return redirect('/personalinfo')
+            return redirect('/personal_info')
         except:
             return 'There was an issue adding your task'
 
@@ -22,5 +22,3 @@ def personalinfo():
         # todo: use render_template
         # return render_template('index.html', tasks=tasks)
         return "This is the Personal Information page"
-
-
