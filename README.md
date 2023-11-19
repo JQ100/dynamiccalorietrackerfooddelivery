@@ -73,7 +73,7 @@ $ (env) flask run
 # Todo
 - Hold knowledge sharing sessions. Record zoom videos.
     - How to start the server
-    - How to create your own branch and merge it to main
+    - How to use github
     - DB development
     - REST API
     - etc
