@@ -22,9 +22,3 @@ def create_app():
     app.register_blueprint(restaurantmenu_bp)
 
     return app
-
-# dynamic_calorie_tracker = create_app()
-
-# @dynamic_calorie_tracker.route("/")
-# def index():
-#     return render_template('index.html');
