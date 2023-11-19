@@ -6,7 +6,7 @@ This is the repo for Dynamic Calorie Tracker project.
 - The file requirements.txt defines the packages for running the service of the project.
 
 # How To Run
-1. Install `virtualenv` if it is not installed:
+1. Install `virtualenv` if it is not installed. It only needs to be installed once, so in most cases you can skip this step.
 ```
 $ pip install virtualenv
 ```
