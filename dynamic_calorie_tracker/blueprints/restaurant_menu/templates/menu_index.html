@@ -11,12 +11,14 @@
     {% else %}
         <table class="center">
             <tr>
-                <th>Menu</th>
+                <th>Id</th>
+                <th>Name</th>
                 <th>Added</th>
                 <th>Actions</th>
             </tr>
             {% for menu in restaurant_menus %}
             <tr>
+                <td>{{ menu.id }}</td>
                 <td>{{ menu.name }}</td>
                 <td>{{ menu.date_created.date() }}</td>
                 <td>
