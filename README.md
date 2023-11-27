@@ -87,3 +87,4 @@ sqlite> select * from personal_info;
 - [Markdown Cheat Sheet](https://www.markdownguide.org/cheat-sheet/) for writing README.md.
 - [How to Use Flask-SQLAlchemy With Flask Blueprints](https://www.youtube.com/watch?v=WhwU1-DLeVw). A video about Flask code structure and database models.
 - [Learn Flask for Python - Full Tutorial](https://youtu.be/Z1RJmh_OqeA?si=RZDIhkaCRJwQjdLJ&t=1182). A video about database models and REST API
+- [Modular Applications with Blueprints](https://flask.palletsprojects.com/en/2.0.x/blueprints/)
