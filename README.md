@@ -47,7 +47,7 @@ This database is structured to hold and manage personal information, dietary det
 ### Tables Description
 
 #### PersonalDetails
-- `detail_id`: INT(10), Primary Key. A unique identifier for each personal detail record.
+- `detail_id`: INT, Primary Key. A unique identifier for each personal detail record.
 - `weight`: DECIMAL(5, 2). Records the weight of the individual.
 - `Height`: DECIMAL(6, 1). Records the height of the individual.
 - `date_of_birth`: DATE. Captures the birth date.
@@ -58,22 +58,22 @@ This database is structured to hold and manage personal information, dietary det
 - `password_salt`: VARCHAR(32). The salt used in conjunction with the hashed password.
 
 #### PersonalData
-- `data_id`: INT(10), Primary Key. Unique identifier for each personal data record.
-- `detail_id`: INT(10), Foreign Key. Links to `PersonalDetails`.
-- `daily_calorie_goal`: INT(10). The individual's target for daily caloric intake.
-- `consumed_calorie`: INT(10). Total calories consumed on a given date.
+- `data_id`: INT, Primary Key. Unique identifier for each personal data record.
+- `detail_id`: INT, Foreign Key. Links to `PersonalDetails`.
+- `daily_calorie_goal`: INT. The individual's target for daily caloric intake.
+- `consumed_calorie`: INT. Total calories consumed on a given date.
 - `today_date`: DATE. The date corresponding to the calorie data.
 
 #### MealRecord
-- `meal_id`: INT(10), Primary Key. Unique identifier for each meal record.
-- `personal_data_id`: INT(10), Foreign Key. Links to `PersonalData`.
-- `Recipes_id`: INT(10), Foreign Key. Links to `Recipes`.
+- `meal_id`: INT, Primary Key. Unique identifier for each meal record.
+- `personal_data_id`: INT, Foreign Key. Links to `PersonalData`.
+- `Recipes_id`: INT, Foreign Key. Links to `Recipes`.
 - `date`: DATE. The date on which the meal was consumed.
 
 #### Recipes
-- `recipes_id`: INT(10), Primary Key. Unique identifier for each recipe.
+- `recipes_id`: INT, Primary Key. Unique identifier for each recipe.
 - `name`: VARCHAR(64). Name of the recipe.
-- `Ingredient`: INT(10). Presumed to be a foreign key to an ingredients table (if intended to store actual ingredients, this should be VARCHAR or TEXT).
+- `Ingredient`: INT. Presumed to be a foreign key to an ingredients table (if intended to store actual ingredients, this should be VARCHAR or TEXT).
 - `recipes`: VARCHAR(4096). The recipe instructions.
 - `nutritional_data`: VARCHAR(512). Nutritional information for the recipe.
 - `link`: VARCHAR(512). A hyperlink to the recipe's source.
@@ -125,7 +125,50 @@ The database is set up to track and manage users' daily caloric intake efficient
 | `nutritional_data`| VARCHAR(512)| Nutritional information of the recipe.      |
 | `link`            | VARCHAR(512)| Link to the recipe's source.   
 
+### Script to generate the database
+```sql
+-- Create a new database (adjust the database name as needed) CREATE DATABASE IF NOT EXISTS FoodDelivery; USE FoodDelivery;
 
+-- Table: Personal Details CREATE TABLE IF NOT EXISTS PersonalDetails (
+  detail_id INT AUTO_INCREMENT PRIMARY KEY,
+  weight DECIMAL(5, 2),
+  height DECIMAL(6, 1),
+  date_of_birth DATE,
+  gender VARCHAR(25),
+  bmi DECIMAL(5, 2),
+  username VARCHAR(255),
+  password_hash VARCHAR(128),
+  password_salt VARCHAR(32)
+);
+
+-- Table: Personal Data CREATE TABLE IF NOT EXISTS PersonalData (
+  data_id INT AUTO_INCREMENT PRIMARY KEY,
+  detail_id INT,
+  daily_calorie_goal INT,
+  consumed_calorie INT DEFAULT 0,
+  today_date DATE,
+  FOREIGN KEY (detail_id) REFERENCES PersonalDetails(detail_id)
+);
+
+-- Table: Recipes CREATE TABLE IF NOT EXISTS Recipes (
+  recipes_id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(64),
+  ingredient TEXT,
+  recipes TEXT,
+  nutritional_data varchar(512),
+  link VARCHAR(512)
+);
+
+-- Table: Meal Record CREATE TABLE IF NOT EXISTS MealRecord (
+  meal_id INT AUTO_INCREMENT PRIMARY KEY,
+  personal_data_id INT,
+  Recipes_id INT,
+  date DATE,
+  calories INT,
+  FOREIGN KEY (personal_data_id) REFERENCES PersonalData(data_id),
+  FOREIGN KEY (Recipes_id) REFERENCES Recipes(recipes_id)
+);
+```
 ## Create DB
 1. Open a terminal in the project root directory and run:
 ```
