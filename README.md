@@ -44,51 +44,18 @@ $ (env) flask run
 ### Overview
 This database is structured to hold and manage personal information, dietary details, meal records, and a comprehensive collection of recipes. The design incorporates a separation of personal details from other personal data for enhanced security. The system is capable of tracking daily caloric intake by documenting meal consumption and aggregating total calories consumed per day.
 
-### Tables Description
-
-#### PersonalDetails
-- `detail_id`: INT, Primary Key. A unique identifier for each personal detail record.
-- `weight`: DECIMAL(5, 2). Records the weight of the individual.
-- `Height`: DECIMAL(6, 1). Records the height of the individual.
-- `date_of_birth`: DATE. Captures the birth date.
-- `gender`: VARCHAR(25). Indicates the gender.
-- `bmi`: DECIMAL(5, 2). Body Mass Index.
-- `username`: VARCHAR(255). Chosen username for account identification.
-- `password_hash`: VARCHAR(128). The hashed password for security.
-- `password_salt`: VARCHAR(32). The salt used in conjunction with the hashed password.
-
-#### PersonalData
-- `data_id`: INT, Primary Key. Unique identifier for each personal data record.
-- `detail_id`: INT, Foreign Key. Links to `PersonalDetails`.
-- `daily_calorie_goal`: INT. The individual's target for daily caloric intake.
-- `consumed_calorie`: INT. Total calories consumed on a given date.
-- `today_date`: DATE. The date corresponding to the calorie data.
-
-#### MealRecord
-- `meal_id`: INT, Primary Key. Unique identifier for each meal record.
-- `personal_data_id`: INT, Foreign Key. Links to `PersonalData`.
-- `Recipes_id`: INT, Foreign Key. Links to `Recipes`.
-- `date`: DATE. The date on which the meal was consumed.
-
-#### Recipes
-- `recipes_id`: INT, Primary Key. Unique identifier for each recipe.
-- `name`: VARCHAR(64). Name of the recipe.
-- `Ingredient`: INT. Presumed to be a foreign key to an ingredients table (if intended to store actual ingredients, this should be VARCHAR or TEXT).
-- `recipes`: VARCHAR(4096). The recipe instructions.
-- `nutritional_data`: VARCHAR(512). Nutritional information for the recipe.
-- `link`: VARCHAR(512). A hyperlink to the recipe's source.
-
 ### Security Considerations
 Sensitive details such as usernames and passwords are stored in a separate table (`PersonalDetails`) and are protected using hashing and salting techniques. This separation helps to safeguard the data against unauthorized access.
 
 ### Functional Operations
 The database is set up to track and manage users' daily caloric intake efficiently. When a user logs a meal into the `MealRecord` table, it records their meal along with the corresponding date and recipe. The `consumed_calorie` field in the `PersonalData` table is then updated to reflect the daily total calorie intake.
 
-### Scheme Of the table
+### Tables Description
+
 #### `PersonalDetails`
 | Field          | Type          | Description                                        |
 |----------------|---------------|----------------------------------------------------|
-| `detail_id`    | INT(10)       | Primary key. Unique identifier for personal details. |
+| `detail_id`    | INT       | Primary key. Unique identifier for personal details. |
 | `weight`       | DECIMAL(5, 2) | Weight of the individual.                          |
 | `Height`       | DECIMAL(6, 1) | Height of the individual.                          |
 | `date_of_birth`| DATE          | Individual's birth date.                           |
@@ -101,26 +68,26 @@ The database is set up to track and manage users' daily caloric intake efficient
 #### `PersonalData`
 | Field               | Type      | Description                                      |
 |---------------------|-----------|--------------------------------------------------|
-| `data_id`           | INT(10)   | Primary key. Unique identifier for personal data. |
-| `detail_id`         | INT(10)   | Foreign key to `PersonalDetails`.               |
-| `daily_calorie_goal`| INT(10)   | Target daily caloric intake.                     |
-| `consumed_calorie`  | INT(10)   | Total calories consumed on a given date.         |
+| `data_id`           | INT   | Primary key. Unique identifier for personal data. |
+| `detail_id`         | INT   | Foreign key to `PersonalDetails`.               |
+| `daily_calorie_goal`| INT   | Target daily caloric intake.                     |
+| `consumed_calorie`  | INT   | Total calories consumed on a given date.         |
 | `today_date`        | DATE      | The date for the calorie data.                   |
 
 #### `MealRecord`
 | Field              | Type    | Description                                     |
 |--------------------|---------|-------------------------------------------------|
-| `meal_id`          | INT(10) | Primary key. Unique identifier for meal records. |
-| `personal_data_id` | INT(10) | Foreign key to `PersonalData`.                  |
-| `Recipes_id`       | INT(10) | Foreign key to `Recipes`.                       |
+| `meal_id`          | INT | Primary key. Unique identifier for meal records. |
+| `personal_data_id` | INT | Foreign key to `PersonalData`.                  |
+| `Recipes_id`       | INT | Foreign key to `Recipes`.                       |
 | `date`             | DATE    | Date when the meal was consumed.                |
 
 #### `Recipes`
 | Field             | Type        | Description                                  |
 |-------------------|-------------|----------------------------------------------|
-| `recipes_id`      | INT(10)     | Primary key. Unique identifier for recipes.   |
+| `recipes_id`      | INT     | Primary key. Unique identifier for recipes.   |
 | `name`            | VARCHAR(64) | Name of the recipe.                          |
-| `Ingredient`      | INT(10)     | ID linking to an ingredients table.          |
+| `Ingredient`      | INT     | ID linking to an ingredients table.          |
 | `recipes`         | VARCHAR(4096)| Recipe instructions.                        |
 | `nutritional_data`| VARCHAR(512)| Nutritional information of the recipe.      |
 | `link`            | VARCHAR(512)| Link to the recipe's source.   
@@ -169,6 +136,199 @@ The database is set up to track and manage users' daily caloric intake efficient
   FOREIGN KEY (Recipes_id) REFERENCES Recipes(recipes_id)
 );
 ```
+
+### DataBase for Food Delivery part, based on SQL Alchemy.
+
+## Overview
+
+This database is designed to store and manage data related to restaurant menu items and customer orders. It provides a structured way to keep track of what items are available on the menu, details about each restaurant, orders placed by customers, and the specifics of each order. The database schema facilitates the connection between different entities such as menu items, restaurants, orders, and customers, ensuring an integrated data management system.
+
+## Database Schema
+
+The database consists of the following tables:
+
+### 1. `Restaurant`
+
+This table stores information about the restaurants.
+
+| Column Name    | Data Type | Description                           |
+| -------------- | --------- | ------------------------------------- |
+| id             | INT       | Primary key, auto-incremented         |
+| name           | VARCHAR   | Name of the restaurant                |
+| Phone_number   | VARCHAR   | Contact phone number for the restaurant |
+| Email          | VARCHAR   | Contact email address for the restaurant |
+
+### 2. `Menu_Item`
+
+Contains details about the menu items available in a restaurant.
+
+| Column Name      | Data Type | Description                                 |
+| ---------------- | --------- | ------------------------------------------- |
+| id               | INT       | Primary key, auto-incremented               |
+| name             | VARCHAR   | Name of the menu item                       |
+| price            | INT       | Price of the menu item                      |
+| Calories         | INT       | Caloric content of the menu item            |
+| Item_adding_date | DATE      | Date when the item was added to the menu    |
+| Restaurant_id    | INT       | Foreign key to `Restaurant` table           |
+
+### 3. `Order`
+
+Records details of customer orders.
+
+| Column Name    | Data Type | Description                        |
+| -------------- | --------- | ---------------------------------- |
+| order_id       | INT       | Primary key, auto-incremented      |
+| date           | DATE      | The date when the order was placed |
+| restaurant_id  | INT       | Foreign key to `Restaurant` table  |
+
+### 4. `Order_Details`
+
+This table holds the details for each order, linking what items were included.
+
+| Column Name       | Data Type | Description                             |
+| ----------------- | --------- | --------------------------------------- |
+| order_details_id  | INT       | Primary key, auto-incremented           |
+| order_id          | INT       | Foreign key to `Order` table            |
+| menu_item_id      | INT       | Foreign key to `Menu_Item` table        |
+
+### 5. `Customer_Orders`
+
+Associates customer orders with restaurants and menu items.
+
+| Column Name     | Data Type | Description                                 |
+| --------------- | --------- | ------------------------------------------- |
+| id              | INT       | Primary key, auto-incremented               |
+| restaurant_id   | INT       | Foreign key to `Restaurant` table           |
+| menu_item_id    | INT       | Foreign key to `Menu_Item` table            |
+
+## Relationships
+
+- Each `Menu_Item` is associated with a `Restaurant`.
+- Each `Order` is associated with a `Restaurant`.
+- `Order_Details` link `Orders` to the `Menu_Items` included in them.
+- `Customer_Orders` provide a direct association between `Restaurants` and `Menu_Items` ordered by customers.
+
+## Usage
+
+The database can be utilized by restaurant management systems to keep track of menu items, process customer orders, and maintain records of what items are being ordered from which restaurant, along with the necessary details of each transaction.
+
+For implementation and interaction with the database, SQLAlchemy ORM classes can be used, providing a Pythonic way to manage the underlying SQL database.
+
+
+### Script to generate it on the SQL
+
+```
+CREATE TABLE IF NOT EXISTS `Menu_Item` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(64) NOT NULL,
+  `price` INT NOT NULL,
+  `Calories` INT NOT NULL,
+  `Item_adding_date` DATE NOT NULL,
+  `Restaurant_id` INT NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE IF NOT EXISTS `Restaurant` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(64) NOT NULL,
+  `Phone_number` VARCHAR(12) NOT NULL,
+  `Email` VARCHAR(64) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE IF NOT EXISTS `Order` (
+  `order_id` INT NOT NULL AUTO_INCREMENT,
+  `date` DATE NOT NULL,
+  `restaurant_id` INT NOT NULL,
+  PRIMARY KEY (`order_id`)
+);
+
+CREATE TABLE IF NOT EXISTS `Order_Details` (
+  `order_details_id` INT NOT NULL AUTO_INCREMENT,
+  `order_id` INT NOT NULL,
+  `menu_item_id` INT NOT NULL,
+  PRIMARY KEY (`order_details_id`)
+);
+
+CREATE TABLE IF NOT EXISTS `customer_orders` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `restaurant_id` INT NOT NULL,
+  `menu_item_id` INT NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- Add Foreign Keys
+ALTER TABLE `Menu_Item` ADD CONSTRAINT `fk_Menu_Item_Restaurant` FOREIGN KEY (`Restaurant_id`) REFERENCES `Restaurant` (`id`);
+ALTER TABLE `Order` ADD CONSTRAINT `fk_Order_Restaurant` FOREIGN KEY (`restaurant_id`) REFERENCES `Restaurant` (`id`);
+ALTER TABLE `Order_Details` ADD CONSTRAINT `fk_Order_Details_Order` FOREIGN KEY (`order_id`) REFERENCES `Order` (`order_id`);
+ALTER TABLE `Order_Details` ADD CONSTRAINT `fk_Order_Details_Menu_Item` FOREIGN KEY (`menu_item_id`) REFERENCES `Menu_Item` (`id`);
+ALTER TABLE `customer_orders` ADD CONSTRAINT `fk_customer_orders_Restaurant` FOREIGN KEY (`restaurant_id`) REFERENCES `Restaurant` (`id`);
+ALTER TABLE `customer_orders` ADD CONSTRAINT `fk_customer_orders_Menu_Item` FOREIGN KEY (`menu_item_id`) REFERENCES `Menu_Item` (`id`);
+
+```
+
+### The script to generate The database on SQL Alchemy
+
+```
+from sqlalchemy import create_engine, Column, Integer, String, Date, ForeignKey
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
+
+Base = declarative_base()
+
+class MenuItem(Base):
+    __tablename__ = 'Menu_Item'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String(64), nullable=False)
+    price = Column(Integer, nullable=False)
+    Calories = Column(Integer, nullable=False)
+    Item_adding_date = Column(Date, nullable=False)
+    Restaurant_id = Column(Integer, ForeignKey('Restaurant.id'))
+    restaurant = relationship("Restaurant", back_populates="menu_items")
+
+class Restaurant(Base):
+    __tablename__ = 'Restaurant'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String(64), nullable=False)
+    Phone_number = Column(String(12), nullable=False)
+    Email = Column(String(64), nullable=False)
+    menu_items = relationship("MenuItem", order_by=MenuItem.id, back_populates="restaurant")
+    orders = relationship("Order", back_populates="restaurant")
+
+class Order(Base):
+    __tablename__ = 'Order'
+    order_id = Column(Integer, primary_key=True, autoincrement=True)
+    date = Column(Date, nullable=False)
+    restaurant_id = Column(Integer, ForeignKey('Restaurant.id'))
+    restaurant = relationship("Restaurant", back_populates="orders")
+    order_details = relationship("OrderDetails", back_populates="order")
+
+class OrderDetails(Base):
+    __tablename__ = 'Order_Details'
+    order_details_id = Column(Integer, primary_key=True, autoincrement=True)
+    order_id = Column(Integer, ForeignKey('Order.order_id'))
+    menu_item_id = Column(Integer, ForeignKey('Menu_Item.id'))
+    order = relationship("Order", back_populates="order_details")
+    menu_item = relationship("MenuItem")
+
+class CustomerOrders(Base):
+    __tablename__ = 'customer_orders'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    restaurant_id = Column(Integer, ForeignKey('Restaurant.id'))
+    menu_item_id = Column(Integer, ForeignKey('Menu_Item.id'))
+    restaurant = relationship("Restaurant")
+    menu_item = relationship("MenuItem")
+
+# Create an engine that stores data in the local directory's
+# sqlalchemy_example.db file.
+engine = create_engine('sqlite:///sqlalchemy_example.db')
+
+# Create all tables in the engine. This is equivalent to "Create Table"
+# statements in raw SQL.
+Base.metadata.create_all(engine)
+
+```
+
 ## Create DB
 1. Open a terminal in the project root directory and run:
 ```
