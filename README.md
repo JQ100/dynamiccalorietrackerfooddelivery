@@ -84,30 +84,47 @@ Sensitive details such as usernames and passwords are stored in a separate table
 ### Functional Operations
 The database is set up to track and manage users' daily caloric intake efficiently. When a user logs a meal into the `MealRecord` table, it records their meal along with the corresponding date and recipe. The `consumed_calorie` field in the `PersonalData` table is then updated to reflect the daily total calorie intake.
 
-### SQL Trigger for Consumed Calories
+### Scheme Of the table
+#### `PersonalDetails`
+| Field          | Type          | Description                                        |
+|----------------|---------------|----------------------------------------------------|
+| `detail_id`    | INT(10)       | Primary key. Unique identifier for personal details. |
+| `weight`       | DECIMAL(5, 2) | Weight of the individual.                          |
+| `Height`       | DECIMAL(6, 1) | Height of the individual.                          |
+| `date_of_birth`| DATE          | Individual's birth date.                           |
+| `gender`       | VARCHAR(25)   | Gender of the individual.                          |
+| `bmi`          | DECIMAL(5, 2) | Body Mass Index of the individual.                 |
+| `username`     | VARCHAR(255)  | Username for account login.                        |
+| `password_hash`| VARCHAR(128)  | Hashed password for account security.              |
+| `password_salt`| VARCHAR(32)   | Salt for the hashed password.                      |
 
-The following SQL trigger is designed to update the `consumed_calorie` field in the `PersonalData` table whenever a new entry is added to the `MealRecord` table:
+#### `PersonalData`
+| Field               | Type      | Description                                      |
+|---------------------|-----------|--------------------------------------------------|
+| `data_id`           | INT(10)   | Primary key. Unique identifier for personal data. |
+| `detail_id`         | INT(10)   | Foreign key to `PersonalDetails`.               |
+| `daily_calorie_goal`| INT(10)   | Target daily caloric intake.                     |
+| `consumed_calorie`  | INT(10)   | Total calories consumed on a given date.         |
+| `today_date`        | DATE      | The date for the calorie data.                   |
 
-```sql
-DELIMITER $$
+#### `MealRecord`
+| Field              | Type    | Description                                     |
+|--------------------|---------|-------------------------------------------------|
+| `meal_id`          | INT(10) | Primary key. Unique identifier for meal records. |
+| `personal_data_id` | INT(10) | Foreign key to `PersonalData`.                  |
+| `Recipes_id`       | INT(10) | Foreign key to `Recipes`.                       |
+| `date`             | DATE    | Date when the meal was consumed.                |
 
-CREATE TRIGGER UpdateConsumedCalories
-AFTER INSERT ON MealRecord
-FOR EACH ROW
-BEGIN
-    DECLARE total_calories INT;
+#### `Recipes`
+| Field             | Type        | Description                                  |
+|-------------------|-------------|----------------------------------------------|
+| `recipes_id`      | INT(10)     | Primary key. Unique identifier for recipes.   |
+| `name`            | VARCHAR(64) | Name of the recipe.                          |
+| `Ingredient`      | INT(10)     | ID linking to an ingredients table.          |
+| `recipes`         | VARCHAR(4096)| Recipe instructions.                        |
+| `nutritional_data`| VARCHAR(512)| Nutritional information of the recipe.      |
+| `link`            | VARCHAR(512)| Link to the recipe's source.   
 
-    SELECT SUM(r.nutritional_data) INTO total_calories
-    FROM MealRecord AS m
-    JOIN Recipes AS r ON m.Recipes_id = r.recipes_id
-    WHERE m.date = NEW.date AND m.personal_data_id = NEW.personal_data_id;
-
-    UPDATE PersonalData
-    SET consumed_calorie = total_calories
-    WHERE data_id = NEW.personal_data_id AND today_date = NEW.date;
-END$$
-
-DELIMITER ;
 
 ## Create DB
 1. Open a terminal in the project root directory and run:
