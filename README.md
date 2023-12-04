@@ -153,7 +153,7 @@ BEGIN
     DECLARE meal_calories INT;
 
 
-    SELECT calorie INTO meal_calories
+    SELECT calorie INTO MealRecord
     FROM Recipes
     WHERE recipes_id = NEW.Recipes_id;
 
