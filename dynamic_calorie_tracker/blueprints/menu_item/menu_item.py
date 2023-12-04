@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect
-from ...models.menu_item import MenuItem
+from ...models.models import MenuItem
 from ...extensions import db
 
 menu_item_bp = Blueprint(

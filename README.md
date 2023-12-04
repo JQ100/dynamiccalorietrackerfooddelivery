@@ -364,7 +364,7 @@ Base.metadata.create_all(engine)
 ```
 
 ## Create DB
-1. Open a terminal in the project root directory and run:
+1. Open a terminal in the project root directory and run the following, which removes the old db and creates a new one:
 ```
 $ rm dynamic_calorie_tracker/db.sqlite3
 $ python db_init.py
