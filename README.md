@@ -104,7 +104,7 @@ The database is set up to track and manage users' daily caloric intake efficient
   date_of_birth DATE,
   gender VARCHAR(25),
   bmi DECIMAL(5, 2),
-  username VARCHAR(255),
+  name VARCHAR(255),
   password_hash VARCHAR(128),
   password_salt VARCHAR(32)
 );
@@ -116,7 +116,8 @@ The database is set up to track and manage users' daily caloric intake efficient
   daily_calorie_goal INT,
   consumed_calorie INT DEFAULT 0,
   today_date DATE,
-  FOREIGN KEY (detail_id) REFERENCES PersonalDetails(detail_id)
+  FOREIGN KEY (detail_id) REFERENCES PersonalDetails(detail_id),
+  username : varchar(32)
 );
 
 -- Table: Recipes 
