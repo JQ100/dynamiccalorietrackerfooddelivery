@@ -1,0 +1,16 @@
+.content{
+    display: flex;
+    justify-content: center; /* Horizontal alignment */
+    align-items: center; /* Vertical alignment */
+
+}
+
+.log{
+    display: block;
+    background-color: rgb(255, 255, 255);
+}
+.log:hover{
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
