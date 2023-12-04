@@ -149,15 +149,15 @@ CREATE TRIGGER update_consumed_calories
 AFTER INSERT ON Meal_Record
 FOR EACH ROW
 BEGIN
-    -- Temporary variable to store calories from the meal
+
     DECLARE meal_calories INT;
 
-    -- Get the calorie content of the meal from the Recipes table
+
     SELECT calorie INTO meal_calories
     FROM Recipes
     WHERE recipes_id = NEW.Recipes_id;
 
-    -- Update the Personal Data table
+
     UPDATE Personal_Data
     SET consumed_calorie = consumed_calorie + meal_calories
     WHERE Personal_Detailsdetail_id = NEW.personal_data_id
