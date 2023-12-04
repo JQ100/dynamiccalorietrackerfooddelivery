@@ -96,7 +96,8 @@ The database is set up to track and manage users' daily caloric intake efficient
 ```sql
 -- Create a new database (adjust the database name as needed) CREATE DATABASE IF NOT EXISTS FoodDelivery; USE FoodDelivery;
 
--- Table: Personal Details CREATE TABLE IF NOT EXISTS PersonalDetails (
+-- Table: Personal Details
+ CREATE TABLE IF NOT EXISTS PersonalDetails (
   detail_id INT AUTO_INCREMENT PRIMARY KEY,
   weight DECIMAL(5, 2),
   height DECIMAL(6, 1),
@@ -108,7 +109,8 @@ The database is set up to track and manage users' daily caloric intake efficient
   password_salt VARCHAR(32)
 );
 
--- Table: Personal Data CREATE TABLE IF NOT EXISTS PersonalData (
+-- Table: Personal Data
+ CREATE TABLE IF NOT EXISTS PersonalData (
   data_id INT AUTO_INCREMENT PRIMARY KEY,
   detail_id INT,
   daily_calorie_goal INT,
@@ -117,7 +119,8 @@ The database is set up to track and manage users' daily caloric intake efficient
   FOREIGN KEY (detail_id) REFERENCES PersonalDetails(detail_id)
 );
 
--- Table: Recipes CREATE TABLE IF NOT EXISTS Recipes (
+-- Table: Recipes 
+CREATE TABLE IF NOT EXISTS Recipes (
   recipes_id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(64),
   ingredient TEXT,
@@ -126,7 +129,8 @@ The database is set up to track and manage users' daily caloric intake efficient
   link VARCHAR(512)
 );
 
--- Table: Meal Record CREATE TABLE IF NOT EXISTS MealRecord (
+-- Table: Meal Record 
+CREATE TABLE IF NOT EXISTS MealRecord (
   meal_id INT AUTO_INCREMENT PRIMARY KEY,
   personal_data_id INT,
   Recipes_id INT,
