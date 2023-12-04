@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect
-from ...models.restaurant_menu import RestaurantMenu
+from ...models.menu_item import MenuItem
 from ...extensions import db
 
 restaurant_menu_bp = Blueprint(
@@ -13,8 +13,9 @@ restaurant_menu_bp = Blueprint(
 @restaurant_menu_bp.route("/restaurant_menu", methods=["GET", "POST"])
 def restaurant_menu():
     if request.method == 'POST':
+        # todo
         name = request.form['name']
-        new_restaurant_menu = RestaurantMenu(name=name)
+        new_restaurant_menu = MenuItem(name=name)
 
         try:
             db.session.add(new_restaurant_menu)
@@ -24,6 +25,5 @@ def restaurant_menu():
             return 'There was an issue adding your menu'
 
     else:
-        restaurant_menus = RestaurantMenu.query.order_by(
-            RestaurantMenu.date_created).all()
-        return render_template('menu_index.html', restaurant_menus=restaurant_menus)
+        menu_items = MenuItem.query.order_by(MenuItem.created_at).all()
+        return render_template('menu_index.html', menu_items=menu_items)
