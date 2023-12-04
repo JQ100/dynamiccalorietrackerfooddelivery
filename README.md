@@ -146,21 +146,21 @@ The trigger update_consumed_calories automatically updates the consumed_calorie 
 DELIMITER //
 
 CREATE TRIGGER update_consumed_calories
-AFTER INSERT ON Meal_Record
+AFTER INSERT ON MealRecord
 FOR EACH ROW
 BEGIN
 
     DECLARE meal_calories INT;
 
 
-    SELECT calorie INTO MealRecord
+    SELECT calorie INTO meal_calories
     FROM Recipes
     WHERE recipes_id = NEW.Recipes_id;
 
 
-    UPDATE Personal_Data
+    UPDATE PersonalData
     SET consumed_calorie = consumed_calorie + meal_calories
-    WHERE Personal_Detailsdetail_id = NEW.personal_data_id
+    WHERE personaldata.data_id = NEW.personal_data_id
     AND today_date = NEW.date;
 END;
 
