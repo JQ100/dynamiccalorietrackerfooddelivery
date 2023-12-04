@@ -2,25 +2,25 @@ from flask import Blueprint, render_template, request, redirect
 from ...models.menu_item import MenuItem
 from ...extensions import db
 
-restaurant_menu_bp = Blueprint(
-    "restaurant_menu", 
+menu_item_bp = Blueprint(
+    "menu_item", 
     __name__, 
     template_folder="templates", 
     static_folder='static',
 )
 
 
-@restaurant_menu_bp.route("/restaurant_menu", methods=["GET", "POST"])
-def restaurant_menu():
+@menu_item_bp.route("/menu_item", methods=["GET", "POST"])
+def menu_item():
     if request.method == 'POST':
         # todo
         name = request.form['name']
-        new_restaurant_menu = MenuItem(name=name)
+        new_menu_item = MenuItem(name=name)
 
         try:
-            db.session.add(new_restaurant_menu)
+            db.session.add(new_menu_item)
             db.session.commit()
-            return redirect('/restaurant_menu')
+            return redirect('/menu_item')
         except:
             return 'There was an issue adding your menu'
 

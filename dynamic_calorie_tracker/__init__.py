@@ -1,11 +1,17 @@
-from flask import Flask, render_template
+from flask import Flask
 from .extensions import db
 
 from .blueprints.main.main import main_bp
-from .blueprints.personal_info.personal_info import personal_info_bp
+from .blueprints.customer.customer import customer_bp
+from .blueprints.customer_order.customer_order import customer_order_bp
 from .blueprints.transaction.transaction import transaction_bp
 from .blueprints.recipes.recipes import recipes_bp
-from .blueprints.restaurant_menu.restaurant_menu import restaurant_menu_bp
+from .blueprints.menu_item.menu_item import menu_item_bp
+from .blueprints.restaurant.restaurant import restaurant_bp
+from .blueprints.order.order import order_bp
+from .blueprints.order_details.order_details import order_details_bp
+
+
 
 def create_app():
     app = Flask(__name__)
@@ -16,9 +22,13 @@ def create_app():
     db.init_app(app)
 
     app.register_blueprint(main_bp)
-    app.register_blueprint(personal_info_bp)
+    app.register_blueprint(customer_bp)
+    app.register_blueprint(customer_order_bp)
     app.register_blueprint(transaction_bp)
     app.register_blueprint(recipes_bp)
-    app.register_blueprint(restaurant_menu_bp)
+    app.register_blueprint(menu_item_bp)
+    app.register_blueprint(restaurant_bp)
+    app.register_blueprint(order_bp)
+    app.register_blueprint(order_details_bp)
 
     return app

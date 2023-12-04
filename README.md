@@ -362,15 +362,8 @@ Base.metadata.create_all(engine)
 ## Create DB
 1. Open a terminal in the project root directory and run:
 ```
-$ python
-```
-2. Run the following in python
-```
->>> from dynamic_calorie_tracker import db
->>> from dynamic_calorie_tracker.extensions import db
->>> from dynamic_calorie_tracker import create_app
->>> from dynamic_calorie_tracker.models import *
->>> db.create_all(app=create_app())
+$ rm dynamic_calorie_tracker/db.sqlite3
+$ python db_init.py
 ```
 
 ## Query DB
