@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect
-from ...models.restaurant import Restaurant
+from ...models.models import Restaurant
 from ...extensions import db
 
 restaurant_bp = Blueprint(

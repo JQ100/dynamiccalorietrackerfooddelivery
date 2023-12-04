@@ -1,8 +1,4 @@
-from dynamic_calorie_tracker.models.menu_item import MenuItem
-from dynamic_calorie_tracker.models.customer import Customer
-from dynamic_calorie_tracker.models.restaurant import Restaurant
-from dynamic_calorie_tracker.models.order import MealOrder
-from dynamic_calorie_tracker.models.order_details import OrderDetails
+from dynamic_calorie_tracker.models.models import MenuItem, Customer, Restaurant, MealOrder, OrderDetails
 
 from sqlalchemy import create_engine
 from dynamic_calorie_tracker import db
@@ -37,7 +33,6 @@ db_session.add_all(restaurants)
 db_session.commit()
 
 # add menu items
-from dynamic_calorie_tracker.models.menu_item import MenuItem
 menuItems = [
     MenuItem(name="Cheeseburger", price=4, calories=300, restaurant_id=1),
     MenuItem(name="Hamburger", price=3, calories=250, restaurant_id=1),

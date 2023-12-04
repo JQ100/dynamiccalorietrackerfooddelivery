@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect
-from ...models.order import MealOrder
+from ...models.models import MealOrder
 from ...extensions import db
 
 order_bp = Blueprint("order", __name__, template_folder="templates")
