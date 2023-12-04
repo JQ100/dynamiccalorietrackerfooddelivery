@@ -143,6 +143,29 @@ CREATE TABLE IF NOT EXISTS MealRecord (
 -- Triggers:
 The trigger update_consumed_calories automatically updates the consumed_calorie field in the PersonalData table with the total calories consumed for each user on a specific date, immediately after a new meal record is inserted into the MealRecord table.
 
+DELIMITER //
+
+CREATE TRIGGER update_consumed_calories
+AFTER INSERT ON Meal_Record
+FOR EACH ROW
+BEGIN
+    -- Temporary variable to store calories from the meal
+    DECLARE meal_calories INT;
+
+    -- Get the calorie content of the meal from the Recipes table
+    SELECT calorie INTO meal_calories
+    FROM Recipes
+    WHERE recipes_id = NEW.Recipes_id;
+
+    -- Update the Personal Data table
+    UPDATE Personal_Data
+    SET consumed_calorie = consumed_calorie + meal_calories
+    WHERE Personal_Detailsdetail_id = NEW.personal_data_id
+    AND today_date = NEW.date;
+END;
+
+//
+DELIMITER ;
 
 
 ```
