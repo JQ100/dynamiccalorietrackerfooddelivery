@@ -139,6 +139,32 @@ CREATE TABLE IF NOT EXISTS MealRecord (
   FOREIGN KEY (personal_data_id) REFERENCES PersonalData(data_id),
   FOREIGN KEY (Recipes_id) REFERENCES Recipes(recipes_id)
 );
+
+-- Triggers:
+The trigger update_consumed_calories automatically updates the consumed_calorie field in the PersonalData table with the total calories consumed for each user on a specific date, immediately after a new meal record is inserted into the MealRecord table.
+
+DELIMITER $$
+CREATE TRIGGER update_consumed_calories
+AFTER INSERT ON MealRecord
+FOR EACH ROW
+BEGIN
+    -- Calculate the total calories consumed by the user on the day of the new meal
+    DECLARE totalCalories INT;
+    SELECT SUM(calories) INTO totalCalories
+    FROM MealRecord
+    WHERE personal_data_id = NEW.personal_data_id 
+    AND date = NEW.date;
+
+    -- Update the consumed_calorie in PersonalData for the relevant day
+    UPDATE PersonalData
+    SET consumed_calorie = totalCalories
+    WHERE data_id = NEW.personal_data_id
+    AND today_date = NEW.date;
+END$$
+
+DELIMITER ;
+
+
 ```
 
 ### DataBase for Food Delivery part, based on SQL Alchemy.
