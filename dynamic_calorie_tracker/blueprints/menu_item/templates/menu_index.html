@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Restaurant Menu</title>
+<title>Menu Items</title>
 {% endblock %}
 
 {% block body %}
 <div class="content">
-    <h1 style="text-align: center">Restaurant Menu</h1>
+    <h1 style="text-align: center">Menu Items</h1>
     {% if menu_items|length < 1 %} <h4 style="text-align: center">There are no menus. Create one below!</h4>
     {% else %}
         <table class="center">
