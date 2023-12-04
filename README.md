@@ -96,28 +96,32 @@ The database is set up to track and manage users' daily caloric intake efficient
 ```sql
 -- Create a new database (adjust the database name as needed) CREATE DATABASE IF NOT EXISTS FoodDelivery; USE FoodDelivery;
 
--- Table: Personal Details CREATE TABLE IF NOT EXISTS PersonalDetails (
+-- Table: Personal Details
+ CREATE TABLE IF NOT EXISTS PersonalDetails (
   detail_id INT AUTO_INCREMENT PRIMARY KEY,
   weight DECIMAL(5, 2),
   height DECIMAL(6, 1),
   date_of_birth DATE,
   gender VARCHAR(25),
   bmi DECIMAL(5, 2),
-  username VARCHAR(255),
+  name VARCHAR(255),
   password_hash VARCHAR(128),
   password_salt VARCHAR(32)
 );
 
--- Table: Personal Data CREATE TABLE IF NOT EXISTS PersonalData (
+-- Table: Personal Data
+ CREATE TABLE IF NOT EXISTS PersonalData (
   data_id INT AUTO_INCREMENT PRIMARY KEY,
   detail_id INT,
   daily_calorie_goal INT,
   consumed_calorie INT DEFAULT 0,
   today_date DATE,
-  FOREIGN KEY (detail_id) REFERENCES PersonalDetails(detail_id)
+  FOREIGN KEY (detail_id) REFERENCES PersonalDetails(detail_id),
+  username : varchar(32)
 );
 
--- Table: Recipes CREATE TABLE IF NOT EXISTS Recipes (
+-- Table: Recipes 
+CREATE TABLE IF NOT EXISTS Recipes (
   recipes_id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(64),
   ingredient TEXT,
@@ -126,7 +130,8 @@ The database is set up to track and manage users' daily caloric intake efficient
   link VARCHAR(512)
 );
 
--- Table: Meal Record CREATE TABLE IF NOT EXISTS MealRecord (
+-- Table: Meal Record 
+CREATE TABLE IF NOT EXISTS MealRecord (
   meal_id INT AUTO_INCREMENT PRIMARY KEY,
   personal_data_id INT,
   Recipes_id INT,
@@ -135,6 +140,35 @@ The database is set up to track and manage users' daily caloric intake efficient
   FOREIGN KEY (personal_data_id) REFERENCES PersonalData(data_id),
   FOREIGN KEY (Recipes_id) REFERENCES Recipes(recipes_id)
 );
+
+-- Triggers:
+The trigger update_consumed_calories automatically updates the consumed_calorie field in the PersonalData table with the total calories consumed for each user on a specific date, immediately after a new meal record is inserted into the MealRecord table.
+
+DELIMITER //
+
+CREATE TRIGGER update_consumed_calories
+AFTER INSERT ON MealRecord
+FOR EACH ROW
+BEGIN
+
+    DECLARE meal_calories INT;
+
+
+    SELECT calorie INTO meal_calories
+    FROM Recipes
+    WHERE recipes_id = NEW.Recipes_id;
+
+
+    UPDATE PersonalData
+    SET consumed_calorie = consumed_calorie + meal_calories
+    WHERE personaldata.data_id = NEW.personal_data_id
+    AND today_date = NEW.date;
+END;
+
+//
+DELIMITER ;
+
+
 ```
 
 ### DataBase for Food Delivery part, based on SQL Alchemy.

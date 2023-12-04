@@ -7,6 +7,7 @@ personal_info_bp = Blueprint("personal_info", __name__, template_folder="templat
 @personal_info_bp.route("/personal_info", methods=['POST', 'GET'])
 def personal_info():
     if request.method == 'POST':
+        # todo
         name = request.form['name']
         new_personal_info = PersonalInfo(name=name)
 
