@@ -28,9 +28,9 @@
                 <td>{{ menu.restaurant_id }}</td>
                 <td>{{ menu.created_at.date() }}</td>
                 <td>
-                    <a href="/delete/{{menu.id}}">Delete</a>
+                    <a href="/menu_item/delete/{{menu.id}}">Delete</a>
                     <br>
-                    <a href="/update/{{menu.id}}">Update</a>
+                    <a href="/menu_item/update/{{menu.id}}">Update</a>
                 </td>
             </tr>
             {% endfor %}
@@ -38,7 +38,7 @@
     {% endif %}
 
         <div class="form" style="text-align: center">
-            <form action="/restaurant_menu" method="POST">
+            <form action="/menu_item" method="POST">
                 <input type="text" name="name" id="name">
                 <input type="submit" value="Add Menu">
             </form>

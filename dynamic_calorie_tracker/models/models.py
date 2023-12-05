@@ -48,6 +48,7 @@ class MealOrder(db.Model):
     # breakfast, lunch, snack, etc.
     name = db.Column(db.String(20))
     customer_id = db.Column(db.Integer, db.ForeignKey('customer.id'))
+    # payment = item prices + tips + taxes + delivery fee
     payment = db.Column(db.Float)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
