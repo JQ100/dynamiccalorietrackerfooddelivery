@@ -5,6 +5,6 @@ from sqlalchemy.orm import Session
 
 db = SQLAlchemy()
 
-engine = create_engine(
-    'sqlite:///db.sqlite3', echo=True)
-db_session = Session(engine)
+db_engine = create_engine(
+    'sqlite:///dynamic_calorie_tracker/db.sqlite3', echo=True)
+db_session = Session(db_engine)
