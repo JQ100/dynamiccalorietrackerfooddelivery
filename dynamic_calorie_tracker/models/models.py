@@ -8,7 +8,7 @@ class Customer(db.Model):
     name = db.Column(db.String(50))
     daily_calories_goal = db.Column(db.Integer)
     per_meal_calories_limit = db.Column(db.Integer)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.now())
 
     def __repr__(self):
         return '<Customer %r>' % self.id
@@ -35,7 +35,7 @@ class MenuItem(db.Model):
     price = db.Column(db.Float)
     calories = db.Column(db.Integer)
     restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurant.id'))
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.now())
 
     restaurant = db.relationship("Restaurant", backref="MenuItem")
 
@@ -50,7 +50,8 @@ class MealOrder(db.Model):
     customer_id = db.Column(db.Integer, db.ForeignKey('customer.id'))
     # payment = item prices + tips + taxes + delivery fee
     payment = db.Column(db.Float)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    # use date instead of datetime for easy query of daily meals
+    created_at = db.Column(db.Date, default=datetime.now().date())
 
     customer = db.relationship("Customer", backref="MealOrder")
 
@@ -64,7 +65,7 @@ class OrderDetails(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     order_id = db.Column(db.Integer, db.ForeignKey('meal_order.id'))
     menu_item_id = db.Column(db.Integer, db.ForeignKey('menu_item.id'))
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.now())
 
     meal_order = db.relationship("MealOrder", backref="OrderDetails")
     menu_item = db.relationship("MenuItem", backref="OrderDetails")
