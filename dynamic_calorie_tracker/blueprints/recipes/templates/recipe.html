@@ -14,13 +14,18 @@
     <div class="content">
         <div>
             <h2>recipe select</h2>
-            <form id="form"> 
-                <input type="search" id="query" name="q" placeholder="Search...">
-                <button>Search</button>
-              </form>
+            <form id="form" action="/recipes" method="GET">
+              <input type="search" id="query" name="q" placeholder="Search...">
+              <button type="submit">Search</button>
+          </form>          
             <div id="search_recipe">
-                <div class="log">...</div>
-                <div class="log">...</div>
+              {% for recipe in recipes %}
+                <div class="recipe">
+                    <p>Recipe Name: {{ recipe[0] }}</p>
+                    <p>Recipe ID: {{ recipe[1] }}</p>
+                </div>
+              {% endfor %}
+                
             </div>
         </div>
     </div>
