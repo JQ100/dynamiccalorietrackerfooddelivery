@@ -24,11 +24,12 @@
                 <td>{{ customer.daily_calories_goal }}</td>
                 <td>{{ customer.per_meal_calories_limit }}</td>
                 <td>
-                    <a href="/food_delivery/customer/{{customer.id}}">order</a>
+                    <a href="/food_delivery/customer/{{customer.id}}">login</a>
                 </td>
             </tr>
             {% endfor %}
         </table>        
     {% endif %}
+        <p style="text-align: center"><a href="/">Back to Home</a></p>
 </div>
 {% endblock %}
