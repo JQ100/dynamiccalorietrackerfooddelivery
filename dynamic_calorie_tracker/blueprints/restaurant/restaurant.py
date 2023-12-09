@@ -15,15 +15,14 @@ def restaurant():
     if request.method == 'POST':
         # todo
         name = request.form['name']
-        new_restaurant = Restaurant(name=name)
+        new_menu_item = Restaurant(name=name)
 
         try:
-            db.session.add(new_restaurant)
+            db.session.add(new_menu_item)
             db.session.commit()
-            return redirect('/restaurant')
+            return redirect('/menu_item')
         except:
             return 'There was an issue adding your menu'
-
     else:
-        restaurants = Restaurant.query.order_by(Restaurant.created_at).all()
-        # return render_template('menu_index.html', restaurants=restaurants)
+        restaurants = Restaurant.query.order_by(Restaurant.id).all()
+        return render_template('restaurant_index.html', restaurants=restaurants)
