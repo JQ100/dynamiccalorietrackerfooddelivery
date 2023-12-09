@@ -30,15 +30,17 @@
 
     <h2>Suggested Meal</h2>
     <!-- check if the meal is empty -->
-    <ul>
-        <!-- todo: convert to a table -->
-        {% for menuItem in suggestedMeal %}
-        <li>name = {{menuItem.name}}, calories = {{menuItem.calories}}, restaurant = {{menuItem.restaurant_id}} </li>
-        {% endfor %}
-    </ul>
-    <!-- check if the meal is empty before ordering -->
-    <p><a href="/food_delivery/order/?customer={{customer.id}}&{{suggestedMealQueryString}}">Order the meal</a></p>
-    <p><a href="/food_delivery/customer/{{customer.id}}">Suggest a meal again</a></p>
-
+    {% if suggestedMeal|length < 1 %} <h4>There is no suggested meal.</h4>
+    {% else %}
+        <ul>
+            <!-- todo: convert to a table -->
+            {% for menuItem in suggestedMeal %}
+            <li>name = {{menuItem.name}}, calories = {{menuItem.calories}}, restaurant = {{menuItem.restaurant_id}} </li>
+            {% endfor %}
+        </ul>
+        <p><a href="/food_delivery/order/?customer={{customer.id}}&{{suggestedMealQueryString}}">Order the meal</a></p>
+        <p><a href="/food_delivery/customer/{{customer.id}}">Suggest a meal again</a></p>
+    {% endif %}
+    <p><a href="/">Back to Home</a></p>
 </div>
 {% endblock %}
