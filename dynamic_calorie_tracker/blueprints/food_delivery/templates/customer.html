@@ -19,7 +19,6 @@
         {% for orderId, menuItems in menuItemsByOrderId.items() %}
         <li>Meal order: orderId = {{orderId}}
             <ul>
-                <!-- todo: convert to a table -->
                 {% for menuItem in menuItems %}
                 <li>name = {{menuItem.name}}, calories = {{menuItem.calories}}, restaurant = {{menuItem.restaurant_id}} </li>
                 {% endfor %}
@@ -29,11 +28,9 @@
     </ol>
 
     <h2>Suggested Meal</h2>
-    <!-- check if the meal is empty -->
     {% if suggestedMeal|length < 1 %} <h4>There is no suggested meal.</h4>
     {% else %}
         <ul>
-            <!-- todo: convert to a table -->
             {% for menuItem in suggestedMeal %}
             <li>name = {{menuItem.name}}, calories = {{menuItem.calories}}, restaurant = {{menuItem.restaurant_id}} </li>
             {% endfor %}
