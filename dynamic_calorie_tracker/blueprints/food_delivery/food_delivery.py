@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect
-from ...models.models import Customer, MealOrder, OrderDetails, MenuItem
+from ...models.models import Customer, MealOrder, OrderItem, MenuItem
 from ...extensions import db
 from datetime import datetime
 
@@ -63,7 +63,7 @@ def getOrderedMealsByCustomerOnDate(customerId, date):
     # {orderId: [menuItems]}
     menuItemsByOrderId = {}
     for order in orders:
-        orderDetailsList = OrderDetails.query.filter_by(
+        orderDetailsList = OrderItem.query.filter_by(
             order_id=order.id).all()
         menuItems = []
         for orderDetails in orderDetailsList:
@@ -90,7 +90,7 @@ def order():
         return 'There was an issue adding your order'
     
     for item_id in itemIds:
-        new_order_details = OrderDetails(order_id=new_order.id, menu_item_id=item_id)
+        new_order_details = OrderItem(order_id=new_order.id, menu_item_id=item_id)
         try:
             db.session.add(new_order_details)
             db.session.commit()

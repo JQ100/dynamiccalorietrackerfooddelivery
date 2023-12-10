@@ -1,4 +1,4 @@
-from dynamic_calorie_tracker.models.models import MenuItem, Customer, Restaurant, MealOrder, OrderDetails
+from dynamic_calorie_tracker.models.models import MenuItem, Customer, Restaurant, MealOrder, OrderItem
 
 from sqlalchemy import create_engine
 from dynamic_calorie_tracker import db
@@ -20,14 +20,14 @@ db_session.query(Customer).delete()
 db_session.query(Restaurant).delete()
 db_session.query(MenuItem).delete()
 db_session.query(MealOrder).delete()
-db_session.query(OrderDetails).delete()
+db_session.query(OrderItem).delete()
 db_session.commit()
 
 # add customers
 customers = [
-    Customer(name="John Doe", daily_calories_goal=2500,
+    Customer(name="John Doe", daily_calories_goal=2800,
               per_meal_calories_limit=1000),
-    Customer(name="Nancy Miller", daily_calories_goal=2000,
+    Customer(name="Nancy Miller", daily_calories_goal=2300,
              per_meal_calories_limit=1000),
 ]
 db_session.add_all(customers)
@@ -63,20 +63,6 @@ menuItems = [
 db_session.add_all(menuItems)
 db_session.commit()
 
-# add orders
-orders = [
-    MealOrder(name="breakfast", customer_id = 1, payment=11.5),
-    MealOrder(name="lunch", customer_id=1, payment=11.5),
-]
-db_session.add_all(orders)
-db_session.commit()
+# Do not need to add orders
 
-# add order_details
-order_details = [
-    OrderDetails(order_id=1, menu_item_id=1),
-    OrderDetails(order_id=1, menu_item_id=3),
-    OrderDetails(order_id=2, menu_item_id=9),
-    OrderDetails(order_id=2, menu_item_id=6),
-]
-db_session.add_all(order_details)
-db_session.commit()
+# Do not need to add OrderItem
