@@ -58,6 +58,7 @@ menuItems = [
     MenuItem(name="Salad", price=3.5, calories=100, restaurant_id=1),
     MenuItem(name="Soup", price=4.5, calories=130, restaurant_id=1),
     MenuItem(name="Burrito", price=6, calories=400, restaurant_id=1),
+    MenuItem(name="Baby Carrots", price=1, calories=50, restaurant_id=1)
 ]
 db_session.add_all(menuItems)
 db_session.commit()
