@@ -21,6 +21,4 @@ def order():
 
     else:
         orders = MealOrder.query.order_by(MealOrder.created_at).all()
-        # todo: use render_template
-        # return render_template('index.html', tasks=tasks)
-        return "This is the MealOrder page"
+        return render_template('order_index.html', orders=orders)

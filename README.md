@@ -4,8 +4,9 @@ This is the repo for Dynamic Calorie Tracker project.
 
 - The directory dynamic_calorie_tracker is the main module for the project. We implement code inside this module.
 - The file requirements.txt defines the packages for running the service of the project.
+- The file models.py defines the DB schema of the tables.
 
-# How To Run
+- # How To Run
 1. Install `virtualenv` if it is not installed. It only needs to be installed once, so in most cases you can skip this step.
 ```
 $ pip install virtualenv
@@ -62,18 +63,7 @@ sqlite> .schema
 sqlite> select * from personal_info;
 ```
 
-# Todo
-- Hold knowledge sharing sessions. Record zoom videos.
-    - How to start the server
-    - How to use github
-    - DB development
-    - REST API
-    - etc
-- use snake format for file and variable names
-- use db migrate to create and populate the db. Use "flask db init" to create db.
-- May rename the repo
-
-# Tutorials and Knowledge Sharing
+# Tutorials and References
 - [Markdown Cheat Sheet](https://www.markdownguide.org/cheat-sheet/) for writing README.md.
 - [How to Use Flask-SQLAlchemy With Flask Blueprints](https://www.youtube.com/watch?v=WhwU1-DLeVw). A video about Flask code structure and database models.
 - [Learn Flask for Python - Full Tutorial](https://youtu.be/Z1RJmh_OqeA?si=RZDIhkaCRJwQjdLJ&t=1182). A video about database models and REST API. Watch this for CRUD.

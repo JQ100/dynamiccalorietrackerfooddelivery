@@ -20,6 +20,4 @@ def customer():
 
     else:
         customers = Customer.query.order_by(Customer.created_at).all()
-        # todo: use render_template
-        # return render_template('index.html', tasks=tasks)
-        return "This is the Customer page"
+        return render_template('customer_index.html', customers=customers)
