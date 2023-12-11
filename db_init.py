@@ -35,7 +35,8 @@ db_session.commit()
 
 # add restaurants
 restaurants = [
-    Restaurant(name="Smack Burgers", category="New American"),
+    Restaurant(name="Smack Burgers", phone="123-456-7890",
+               email="dummy@mail.com", address="dummy address"),
 ]
 db_session.add_all(restaurants)
 db_session.commit()

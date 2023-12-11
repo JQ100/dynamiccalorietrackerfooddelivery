@@ -32,6 +32,20 @@
             {% endfor %}
         </table>
         {% endif %}
+        <div class="form" style="text-align: center">
+            <form action="/customer" method="POST">
+                <label for="name">name</label>
+                <input type="text" name="name" id="name">
+                <!-- <br> -->
+                <label for="daily_calories_goal">daily calories goal</label>
+                <input type="text" name="daily_calories_goal" id="daily_calories_goal">
+                <br>
+                <label for="per_meal_calories_limit">per meal calories limit</label>
+                <input type="text" name="per_meal_calories_limit" id="per_meal_calories_limit">
+                <br>
+                <input type="submit" value="Add Customer">
+            </form>
+        </div>
         <p style="text-align: center"><a href="/">Back to Home</a></p>
 </div>
 {% endblock %}
