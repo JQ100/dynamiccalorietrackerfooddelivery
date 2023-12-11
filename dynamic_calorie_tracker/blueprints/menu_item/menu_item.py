@@ -13,9 +13,13 @@ menu_item_bp = Blueprint(
 @menu_item_bp.route("/menu_item", methods=["GET", "POST"])
 def menu_item():
     if request.method == 'POST':
-        # todo
         name = request.form['name']
-        new_menu_item = MenuItem(name=name)
+        price = int(request.form['price'])
+        calories = int(request.form['calories'])
+        restaurant_id = int(request.form['restaurant_id'])
+
+        new_menu_item = MenuItem(
+            name=name, price=price, calories=calories, restaurant_id=restaurant_id)
 
         try:
             db.session.add(new_menu_item)
@@ -23,7 +27,6 @@ def menu_item():
             return redirect('/menu_item')
         except:
             return 'There was an issue adding your menu'
-
     else:
         menu_items = MenuItem.query.order_by(MenuItem.created_at).all()
         return render_template('menu_index.html', menu_items=menu_items)

@@ -20,7 +20,6 @@ class Restaurant(db.Model):
     phone = db.Column(db.String(12))
     email = db.Column(db.String(64))
     address = db.Column(db.String(200))
-    category = db.Column(db.String(30))
 
     def __repr__(self):
         return '<Restaurant %r>' % self.id
@@ -29,9 +28,6 @@ class Restaurant(db.Model):
 class MenuItem(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
-    # category can be appetizer, side, soup, salad or main course
-    # so that we do not order too many main courses in one meal
-    category = db.Column(db.String(20))
     price = db.Column(db.Float)
     calories = db.Column(db.Integer)
     restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurant.id'))
