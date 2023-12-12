@@ -24,7 +24,6 @@ def customer(id):
     
     totalCalories = getCalories(menuItemsByOrderId)
 
-    # todo: suggest a meal, create a function
     suggestedMeal = suggestAMeal(totalCalories, customer)
     suggestedMealQueryString = '&'.join(f'item={item.id}' for item in suggestedMeal)
     return render_template('customer.html', 
@@ -63,11 +62,11 @@ def getOrderedMealsByCustomerOnDate(customerId, date):
     # {orderId: [menuItems]}
     menuItemsByOrderId = {}
     for order in orders:
-        orderDetailsList = OrderItem.query.filter_by(
+        orderItems = OrderItem.query.filter_by(
             order_id=order.id).all()
         menuItems = []
-        for orderDetails in orderDetailsList:
-            menuItem = MenuItem.query.filter_by(id=orderDetails.menu_item_id).all()
+        for orderItem in orderItems:
+            menuItem = MenuItem.query.filter_by(id=orderItem.menu_item_id).all()
             menuItems.extend(menuItem)
         menuItemsByOrderId[order.id] = menuItems
     return menuItemsByOrderId
@@ -90,9 +89,9 @@ def order():
         return 'There was an issue adding your order'
     
     for item_id in itemIds:
-        new_order_details = OrderItem(order_id=new_order.id, menu_item_id=item_id)
+        new_order_item = OrderItem(order_id=new_order.id, menu_item_id=item_id)
         try:
-            db.session.add(new_order_details)
+            db.session.add(new_order_item)
             db.session.commit()
         except:
             return 'There was an issue adding your order details'
